@@ -11,6 +11,10 @@ mdfelib/v3_00/consMDFeNaoEnc.py
 mdfelib/v3_00/consSitMDFe.py
 mdfelib/v3_00/consStatServMDFe.py
 mdfelib/v3_00/enviMDFe.py
+mdfelib/v3_00/evCancMDFe.py
+mdfelib/v3_00/evEncMDFe.py
+mdfelib/v3_00/evIncCondutorMDFe.py
+mdfelib/v3_00/eventoMDFe.py
 mdfelib/v3_00/generatedsnamespaces.py
 mdfelib/v3_00/mdfe.py
 mdfelib/v3_00/mdfeModalRodoviario.py

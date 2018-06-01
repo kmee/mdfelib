@@ -160,7 +160,7 @@ Insira neste local o XML específico do tipo de evento (cancelamento, encerramen
 							</xs:annotation>
 							<xs:simpleType>
 								<xs:restriction base="xs:string">
-									<xs:whiteSpevIncCondutorMDFe_v3.00ace value="preserve"/>
+									<xs:whiteSpace value="preserve"/>
 									<xs:pattern value="[1-9][0-9]|0?[1-9]"/>
 								</xs:restriction>
 							</xs:simpleType>
