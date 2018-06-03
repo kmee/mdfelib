@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Fri Jun  1 17:25:25 2018 by generateDS.py version 2.29.2.
+# Generated Sun Jun  3 15:26:55 2018 by generateDS.py version 2.29.2.
 # Python 3.6.5 (default, Apr  1 2018, 05:46:30)  [GCC 7.3.0]
 #
 # Command line options:
@@ -1549,7 +1549,7 @@ class veicTracaoType(GeneratedsSuper):
             if not self.gds_validate_simple_patterns(
                     self.validate_placaType_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_placaType_patterns_, ))
-    validate_placaType_patterns_ = [['^[A-Z]{2,3}[0-9]{4}$|^[A-Z]{3,4}[0-9]{3}$']]
+    validate_placaType_patterns_ = [['^[A-Z]{2,3}[0-9]{4}$|^[A-Z]{3,4}[0-9]{3}$|^[A-Z0-9]{7}$']]
     def validate_RENAVAMType(self, value):
         # Validate type RENAVAMType, a restriction on TString.
         if value is not None and Validate_simpletypes_:
@@ -2177,7 +2177,7 @@ class veicReboqueType(GeneratedsSuper):
             if not self.gds_validate_simple_patterns(
                     self.validate_placaType3_patterns_, value):
                 warnings_.warn('Value "%s" does not match xsd pattern restrictions: %s' % (value.encode('utf-8'), self.validate_placaType3_patterns_, ))
-    validate_placaType3_patterns_ = [['^[A-Z]{2,3}[0-9]{4}$|^[A-Z]{3,4}[0-9]{3}$']]
+    validate_placaType3_patterns_ = [['^[A-Z]{2,3}[0-9]{4}$|^[A-Z]{3,4}[0-9]{3}$|^[A-Z0-9]{7}$']]
     def validate_RENAVAMType4(self, value):
         # Validate type RENAVAMType4, a restriction on TString.
         if value is not None and Validate_simpletypes_:

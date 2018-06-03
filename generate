@@ -64,7 +64,7 @@ EOF
   done
 }
 
-generate "v3_00" "https://mdfe-portal.sefaz.rs.gov.br/Site/DownloadArquivoNovo/?tipoArquivo=2&nomeArquivo=PL_MDFe_300_NT032017.zip"
+generate "v3_00" "https://mdfe-portal.sefaz.rs.gov.br/Site/DownloadArquivoNovo/?tipoArquivo=2&nomeArquivo=PL_MDFe_300_NT012018.zip"
 
 cd docs
 make html
