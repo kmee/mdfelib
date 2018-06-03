@@ -42,7 +42,7 @@ EOF
     local module_name=$(echo $name | tr "/" "\n" | tail -n1)
     # generateDS -o "$gen_path/$module_name".py -s "$gen_path/$module_name"_subs.py "$f"
     cp generatedsnamespaces.py "$gen_path"/generatedsnamespaces.py
-    if [[ "$module_name" == "enviMDFe" ]] || [[ "$module_name" == "mdfe" ]] || [[ "$module_name" == "mdfeModalRodoviario" ]] || [[ "$module_name" == "procMDFe" ]]  || [[ "$module_name" == "consStatServMDFe" ]] || [[ "$module_name" == "consSitMDFe" ]] || [[ "$module_name" == "consMDFeNaoEnc" ]] || [[ "$module_name" == "eventoMDFe" ]]|| [[ "$module_name" == "evCancMDFe" ]]|| [[ "$module_name" == "evEncMDFe" ]]|| [[ "$module_name" == "evIncCondutorMDFe" ]]; then
+    if [[ "$module_name" == "enviMDFe" ]] || [[ "$module_name" == "mdfe" ]] || [[ "$module_name" == "mdfeModalRodoviario" ]] || [[ "$module_name" == "procMDFe" ]]  || [[ "$module_name" == "consStatServMDFe" ]] || [[ "$module_name" == "consSitMDFe" ]] || [[ "$module_name" == "consMDFeNaoEnc" ]] || [[ "$module_name" == "eventoMDFe" ]]|| [[ "$module_name" == "evCancMDFe" ]]|| [[ "$module_name" == "evEncMDFe" ]] || [[ "$module_name" == "evIncCondutorMDFe" ]] || [[ "$module_name" == "consReciMDFe" ]]; then
       generateDS --no-namespace-defs  -o "$gen_path/$module_name".py "$f"
     else
       # --no-process_includes is said to be a risky option that disable validators, but probably we
