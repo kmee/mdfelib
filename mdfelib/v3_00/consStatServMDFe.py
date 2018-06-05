@@ -1122,6 +1122,7 @@ class TRetConsStatServ(GeneratedsSuper):
 
 GDSClassesMapping = {
     'consStatServMDFe': TConsStatServ,
+    'retConsStatServMDFe': TRetConsStatServ,
 }
 
 

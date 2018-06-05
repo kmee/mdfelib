@@ -8744,6 +8744,7 @@ class DigestMethodType(GeneratedsSuper):
 GDSClassesMapping = {
     'Signature': SignatureType,
     'enviMDFe': TEnviMDFe,
+    'retEnviMDFe': TRetEnviMDFe,
 }
 
 
