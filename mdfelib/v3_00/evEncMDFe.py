@@ -2480,6 +2480,7 @@ class DigestMethodType(GeneratedsSuper):
 
 GDSClassesMapping = {
     'Signature': SignatureType,
+    'retEventoMDFe': TRetEvento,
 }
 
 

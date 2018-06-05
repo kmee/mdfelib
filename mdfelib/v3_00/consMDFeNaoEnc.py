@@ -1880,6 +1880,7 @@ class DigestMethodType(GeneratedsSuper):
 GDSClassesMapping = {
     'Signature': SignatureType,
     'consMDFeNaoEnc': TConsMDFeNaoEnc,
+    'retConsMDFeNaoEnc': TRetConsMDFeNaoEnc,
 }
 
 
