@@ -25,6 +25,10 @@ import re as re_
 import base64
 import datetime as datetime_
 import warnings as warnings_
+
+from .procMDFe import infProtType
+
+
 from builtins import str
 try:
     from lxml import etree as etree_
@@ -382,6 +386,8 @@ except ImportError as exp:
                         class_obj1 = class_obj2
             return class_obj1
         def gds_build_any(self, node, type_name=None):
+            if type_name == 'protMDFeType':
+                return infProtType()
             return None
         @classmethod
         def gds_reverse_node_mapping(cls, mapping):
@@ -2204,6 +2210,10 @@ class DigestMethodType(GeneratedsSuper):
 GDSClassesMapping = {
     'Signature': SignatureType,
     'consSitMDFe': TConsSitMDFe,
+    'retConsSitMDFe': TRetConsSitMDFe,
+    'protMDFe': protMDFeType,
+    'procEventoMDFe': procEventoMDFeType,
+    'infProt': infProtType,
 }
 
 
