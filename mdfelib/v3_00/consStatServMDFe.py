@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Jun  4 08:46:44 2018 by generateDS.py version 2.29.2.
+# Generated Thu Aug 30 15:52:24 2018 by generateDS.py version 2.29.3.
 # Python 3.6.5 (default, Apr  1 2018, 05:46:30)  [GCC 7.3.0]
 #
 # Command line options:
+#   ('--export', 'etree')
 #   ('--no-namespace-defs', '')
 #   ('-o', 'mdfelib/v3_00/consStatServMDFe.py')
 #
@@ -13,19 +14,17 @@
 #   schemas/v3_00/consStatServMDFe_v3.00.xsd
 #
 # Command line:
-#   /usr/local/bin/generateDS --no-namespace-defs -o "mdfelib/v3_00/consStatServMDFe.py" schemas/v3_00/consStatServMDFe_v3.00.xsd
+#   /usr/local/bin/generateDS --export="etree" --no-namespace-defs -o "mdfelib/v3_00/consStatServMDFe.py" schemas/v3_00/consStatServMDFe_v3.00.xsd
 #
 # Current working directory (os.getcwd()):
 #   mdfelib
 #
 
-from __future__ import unicode_literals
 import sys
 import re as re_
 import base64
 import datetime as datetime_
 import warnings as warnings_
-from builtins import str
 try:
     from lxml import etree as etree_
 except ImportError:
@@ -388,7 +387,7 @@ except ImportError as exp:
             return dict(((v, k) for k, v in mapping.iteritems()))
         @staticmethod
         def gds_encode(instring):
-            if sys.version_info.major == 2 and not isinstance(instring, unicode):
+            if sys.version_info.major == 2:
                 return instring.encode(ExternalEncoding)
             else:
                 return instring
@@ -771,42 +770,22 @@ class TConsStatServ(GeneratedsSuper):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='TConsStatServ', namespacedef_='', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('TConsStatServ')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
+    def to_etree(self, parent_element=None, name_='TConsStatServ', prefix_=None, mapping_=None):
+        if parent_element is None:
+            element = etree_.Element('{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='TConsStatServ')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='TConsStatServ', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='TConsStatServ'):
-        if self.versao is not None and 'versao' not in already_processed:
-            already_processed.add('versao')
-            outfile.write(' versao=%s' % (quote_attrib(self.versao), ))
-    def exportChildren(self, outfile, level, namespace_='', name_='TConsStatServ', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
+            element = etree_.SubElement(parent_element, '{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
+        if self.versao is not None:
+            element.set('versao', self.versao)
         if self.tpAmb is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<tpAmb>%s</tpAmb>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.tpAmb), input_name='tpAmb')), eol_))
+            tpAmb_ = self.tpAmb
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}tpAmb').text = self.gds_format_string(tpAmb_)
         if self.xServ is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<xServ>%s</xServ>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.xServ), input_name='xServ')), eol_))
+            xServ_ = self.xServ
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}xServ').text = self.gds_format_string(xServ_)
+        if mapping_ is not None:
+            mapping_[self] = element
+        return element
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -988,63 +967,43 @@ class TRetConsStatServ(GeneratedsSuper):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='TRetConsStatServ', namespacedef_='', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('TRetConsStatServ')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
+    def to_etree(self, parent_element=None, name_='TRetConsStatServ', prefix_=None, mapping_=None):
+        if parent_element is None:
+            element = etree_.Element('{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='TRetConsStatServ')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='TRetConsStatServ', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='TRetConsStatServ'):
-        if self.versao is not None and 'versao' not in already_processed:
-            already_processed.add('versao')
-            outfile.write(' versao=%s' % (quote_attrib(self.versao), ))
-    def exportChildren(self, outfile, level, namespace_='', name_='TRetConsStatServ', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
+            element = etree_.SubElement(parent_element, '{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
+        if self.versao is not None:
+            element.set('versao', self.versao)
         if self.tpAmb is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<tpAmb>%s</tpAmb>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.tpAmb), input_name='tpAmb')), eol_))
+            tpAmb_ = self.tpAmb
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}tpAmb').text = self.gds_format_string(tpAmb_)
         if self.verAplic is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<verAplic>%s</verAplic>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.verAplic), input_name='verAplic')), eol_))
+            verAplic_ = self.verAplic
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}verAplic').text = self.gds_format_string(verAplic_)
         if self.cStat is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<cStat>%s</cStat>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.cStat), input_name='cStat')), eol_))
+            cStat_ = self.cStat
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}cStat').text = self.gds_format_string(cStat_)
         if self.xMotivo is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<xMotivo>%s</xMotivo>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.xMotivo), input_name='xMotivo')), eol_))
+            xMotivo_ = self.xMotivo
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}xMotivo').text = self.gds_format_string(xMotivo_)
         if self.cUF is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<cUF>%s</cUF>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.cUF), input_name='cUF')), eol_))
+            cUF_ = self.cUF
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}cUF').text = self.gds_format_string(cUF_)
         if self.dhRecbto is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<dhRecbto>%s</dhRecbto>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.dhRecbto), input_name='dhRecbto')), eol_))
+            dhRecbto_ = self.dhRecbto
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}dhRecbto').text = self.gds_format_string(dhRecbto_)
         if self.tMed is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<tMed>%s</tMed>%s' % (self.gds_format_integer(self.tMed, input_name='tMed'), eol_))
+            tMed_ = self.tMed
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}tMed').text = self.gds_format_integer(tMed_)
         if self.dhRetorno is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<dhRetorno>%s</dhRetorno>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.dhRetorno), input_name='dhRetorno')), eol_))
+            dhRetorno_ = self.dhRetorno
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}dhRetorno').text = self.gds_format_string(dhRetorno_)
         if self.xObs is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<xObs>%s</xObs>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.xObs), input_name='xObs')), eol_))
+            xObs_ = self.xObs
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}xObs').text = self.gds_format_string(xObs_)
+        if mapping_ is not None:
+            mapping_[self] = element
+        return element
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)

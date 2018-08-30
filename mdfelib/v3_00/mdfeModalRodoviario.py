@@ -2,10 +2,11 @@
 # -*- coding: utf-8 -*-
 
 #
-# Generated Mon Jun  4 08:46:50 2018 by generateDS.py version 2.29.2.
+# Generated Thu Aug 30 15:52:29 2018 by generateDS.py version 2.29.3.
 # Python 3.6.5 (default, Apr  1 2018, 05:46:30)  [GCC 7.3.0]
 #
 # Command line options:
+#   ('--export', 'etree')
 #   ('--no-namespace-defs', '')
 #   ('-o', 'mdfelib/v3_00/mdfeModalRodoviario.py')
 #
@@ -13,19 +14,17 @@
 #   schemas/v3_00/mdfeModalRodoviario_v3.00.xsd
 #
 # Command line:
-#   /usr/local/bin/generateDS --no-namespace-defs -o "mdfelib/v3_00/mdfeModalRodoviario.py" schemas/v3_00/mdfeModalRodoviario_v3.00.xsd
+#   /usr/local/bin/generateDS --export="etree" --no-namespace-defs -o "mdfelib/v3_00/mdfeModalRodoviario.py" schemas/v3_00/mdfeModalRodoviario_v3.00.xsd
 #
 # Current working directory (os.getcwd()):
 #   mdfelib
 #
 
-from __future__ import unicode_literals
 import sys
 import re as re_
 import base64
 import datetime as datetime_
 import warnings as warnings_
-from builtins import str
 try:
     from lxml import etree as etree_
 except ImportError:
@@ -388,7 +387,7 @@ except ImportError as exp:
             return dict(((v, k) for k, v in mapping.iteritems()))
         @staticmethod
         def gds_encode(instring):
-            if sys.version_info.major == 2 and not isinstance(instring, unicode):
+            if sys.version_info.major == 2:
                 return instring.encode(ExternalEncoding)
             else:
                 return instring
@@ -776,45 +775,27 @@ class rodo(GeneratedsSuper):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='rodo', namespacedef_='', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('rodo')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
+    def to_etree(self, parent_element=None, name_='rodo', prefix_=None, mapping_=None):
+        if parent_element is None:
+            element = etree_.Element('{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='rodo')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='rodo', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='rodo'):
-        pass
-    def exportChildren(self, outfile, level, namespace_='', name_='rodo', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
+            element = etree_.SubElement(parent_element, '{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         if self.infANTT is not None:
-            self.infANTT.export(outfile, level, namespace_, name_='infANTT', pretty_print=pretty_print)
+            infANTT_ = self.infANTT
+            infANTT_.to_etree(element, name_='infANTT', mapping_=mapping_)
         if self.veicTracao is not None:
-            self.veicTracao.export(outfile, level, namespace_, name_='veicTracao', pretty_print=pretty_print)
+            veicTracao_ = self.veicTracao
+            veicTracao_.to_etree(element, name_='veicTracao', mapping_=mapping_)
         for veicReboque_ in self.veicReboque:
-            veicReboque_.export(outfile, level, namespace_, name_='veicReboque', pretty_print=pretty_print)
+            veicReboque_.to_etree(element, name_='veicReboque', mapping_=mapping_)
         if self.codAgPorto is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<codAgPorto>%s</codAgPorto>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.codAgPorto), input_name='codAgPorto')), eol_))
+            codAgPorto_ = self.codAgPorto
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}codAgPorto').text = self.gds_format_string(codAgPorto_)
         for lacRodo_ in self.lacRodo:
-            lacRodo_.export(outfile, level, namespace_, name_='lacRodo', pretty_print=pretty_print)
+            lacRodo_.to_etree(element, name_='lacRodo', mapping_=mapping_)
+        if mapping_ is not None:
+            mapping_[self] = element
+        return element
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -913,43 +894,24 @@ class infANTTType(GeneratedsSuper):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='infANTTType', namespacedef_='', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('infANTTType')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
+    def to_etree(self, parent_element=None, name_='infANTTType', prefix_=None, mapping_=None):
+        if parent_element is None:
+            element = etree_.Element('{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='infANTTType')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='infANTTType', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='infANTTType'):
-        pass
-    def exportChildren(self, outfile, level, namespace_='', name_='infANTTType', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
+            element = etree_.SubElement(parent_element, '{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         if self.RNTRC is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<RNTRC>%s</RNTRC>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.RNTRC), input_name='RNTRC')), eol_))
+            RNTRC_ = self.RNTRC
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}RNTRC').text = self.gds_format_string(RNTRC_)
         for infCIOT_ in self.infCIOT:
-            infCIOT_.export(outfile, level, namespace_, name_='infCIOT', pretty_print=pretty_print)
+            infCIOT_.to_etree(element, name_='infCIOT', mapping_=mapping_)
         if self.valePed is not None:
-            self.valePed.export(outfile, level, namespace_, name_='valePed', pretty_print=pretty_print)
+            valePed_ = self.valePed
+            valePed_.to_etree(element, name_='valePed', mapping_=mapping_)
         for infContratante_ in self.infContratante:
-            infContratante_.export(outfile, level, namespace_, name_='infContratante', pretty_print=pretty_print)
+            infContratante_.to_etree(element, name_='infContratante', mapping_=mapping_)
+        if mapping_ is not None:
+            mapping_[self] = element
+        return element
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -1043,43 +1005,23 @@ class infCIOTType(GeneratedsSuper):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='infCIOTType', namespacedef_='', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('infCIOTType')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
+    def to_etree(self, parent_element=None, name_='infCIOTType', prefix_=None, mapping_=None):
+        if parent_element is None:
+            element = etree_.Element('{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='infCIOTType')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='infCIOTType', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='infCIOTType'):
-        pass
-    def exportChildren(self, outfile, level, namespace_='', name_='infCIOTType', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
+            element = etree_.SubElement(parent_element, '{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         if self.CIOT is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<CIOT>%s</CIOT>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.CIOT), input_name='CIOT')), eol_))
+            CIOT_ = self.CIOT
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}CIOT').text = self.gds_format_string(CIOT_)
         if self.CPF is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<CPF>%s</CPF>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.CPF), input_name='CPF')), eol_))
+            CPF_ = self.CPF
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}CPF').text = self.gds_format_string(CPF_)
         if self.CNPJ is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<CNPJ>%s</CNPJ>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.CNPJ), input_name='CNPJ')), eol_))
+            CNPJ_ = self.CNPJ
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}CNPJ').text = self.gds_format_string(CNPJ_)
+        if mapping_ is not None:
+            mapping_[self] = element
+        return element
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -1144,36 +1086,16 @@ class valePedType(GeneratedsSuper):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='valePedType', namespacedef_='', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('valePedType')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
+    def to_etree(self, parent_element=None, name_='valePedType', prefix_=None, mapping_=None):
+        if parent_element is None:
+            element = etree_.Element('{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='valePedType')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='valePedType', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='valePedType'):
-        pass
-    def exportChildren(self, outfile, level, namespace_='', name_='valePedType', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
+            element = etree_.SubElement(parent_element, '{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         for disp_ in self.disp:
-            disp_.export(outfile, level, namespace_, name_='disp', pretty_print=pretty_print)
+            disp_.to_etree(element, name_='disp', mapping_=mapping_)
+        if mapping_ is not None:
+            mapping_[self] = element
+        return element
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -1275,49 +1197,29 @@ class dispType(GeneratedsSuper):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='dispType', namespacedef_='', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('dispType')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
+    def to_etree(self, parent_element=None, name_='dispType', prefix_=None, mapping_=None):
+        if parent_element is None:
+            element = etree_.Element('{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='dispType')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='dispType', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='dispType'):
-        pass
-    def exportChildren(self, outfile, level, namespace_='', name_='dispType', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
+            element = etree_.SubElement(parent_element, '{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         if self.CNPJForn is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<CNPJForn>%s</CNPJForn>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.CNPJForn), input_name='CNPJForn')), eol_))
+            CNPJForn_ = self.CNPJForn
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}CNPJForn').text = self.gds_format_string(CNPJForn_)
         if self.CNPJPg is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<CNPJPg>%s</CNPJPg>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.CNPJPg), input_name='CNPJPg')), eol_))
+            CNPJPg_ = self.CNPJPg
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}CNPJPg').text = self.gds_format_string(CNPJPg_)
         if self.CPFPg is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<CPFPg>%s</CPFPg>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.CPFPg), input_name='CPFPg')), eol_))
+            CPFPg_ = self.CPFPg
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}CPFPg').text = self.gds_format_string(CPFPg_)
         if self.nCompra is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<nCompra>%s</nCompra>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.nCompra), input_name='nCompra')), eol_))
+            nCompra_ = self.nCompra
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}nCompra').text = self.gds_format_string(nCompra_)
         if self.vValePed is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<vValePed>%s</vValePed>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.vValePed), input_name='vValePed')), eol_))
+            vValePed_ = self.vValePed
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}vValePed').text = self.gds_format_string(vValePed_)
+        if mapping_ is not None:
+            mapping_[self] = element
+        return element
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -1408,40 +1310,20 @@ class infContratanteType(GeneratedsSuper):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='infContratanteType', namespacedef_='', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('infContratanteType')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
+    def to_etree(self, parent_element=None, name_='infContratanteType', prefix_=None, mapping_=None):
+        if parent_element is None:
+            element = etree_.Element('{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='infContratanteType')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='infContratanteType', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='infContratanteType'):
-        pass
-    def exportChildren(self, outfile, level, namespace_='', name_='infContratanteType', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
+            element = etree_.SubElement(parent_element, '{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         if self.CPF is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<CPF>%s</CPF>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.CPF), input_name='CPF')), eol_))
+            CPF_ = self.CPF
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}CPF').text = self.gds_format_string(CPF_)
         if self.CNPJ is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<CNPJ>%s</CNPJ>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.CNPJ), input_name='CNPJ')), eol_))
+            CNPJ_ = self.CNPJ
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}CNPJ').text = self.gds_format_string(CNPJ_)
+        if mapping_ is not None:
+            mapping_[self] = element
+        return element
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -1635,65 +1517,46 @@ class veicTracaoType(GeneratedsSuper):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='veicTracaoType', namespacedef_='', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('veicTracaoType')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
+    def to_etree(self, parent_element=None, name_='veicTracaoType', prefix_=None, mapping_=None):
+        if parent_element is None:
+            element = etree_.Element('{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='veicTracaoType')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='veicTracaoType', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='veicTracaoType'):
-        pass
-    def exportChildren(self, outfile, level, namespace_='', name_='veicTracaoType', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
+            element = etree_.SubElement(parent_element, '{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         if self.cInt is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<cInt>%s</cInt>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.cInt), input_name='cInt')), eol_))
+            cInt_ = self.cInt
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}cInt').text = self.gds_format_string(cInt_)
         if self.placa is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<placa>%s</placa>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.placa), input_name='placa')), eol_))
+            placa_ = self.placa
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}placa').text = self.gds_format_string(placa_)
         if self.RENAVAM is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<RENAVAM>%s</RENAVAM>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.RENAVAM), input_name='RENAVAM')), eol_))
+            RENAVAM_ = self.RENAVAM
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}RENAVAM').text = self.gds_format_string(RENAVAM_)
         if self.tara is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<tara>%s</tara>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.tara), input_name='tara')), eol_))
+            tara_ = self.tara
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}tara').text = self.gds_format_string(tara_)
         if self.capKG is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<capKG>%s</capKG>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.capKG), input_name='capKG')), eol_))
+            capKG_ = self.capKG
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}capKG').text = self.gds_format_string(capKG_)
         if self.capM3 is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<capM3>%s</capM3>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.capM3), input_name='capM3')), eol_))
+            capM3_ = self.capM3
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}capM3').text = self.gds_format_string(capM3_)
         if self.prop is not None:
-            self.prop.export(outfile, level, namespace_, name_='prop', pretty_print=pretty_print)
+            prop_ = self.prop
+            prop_.to_etree(element, name_='prop', mapping_=mapping_)
         for condutor_ in self.condutor:
-            condutor_.export(outfile, level, namespace_, name_='condutor', pretty_print=pretty_print)
+            condutor_.to_etree(element, name_='condutor', mapping_=mapping_)
         if self.tpRod is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<tpRod>%s</tpRod>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.tpRod), input_name='tpRod')), eol_))
+            tpRod_ = self.tpRod
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}tpRod').text = self.gds_format_string(tpRod_)
         if self.tpCar is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<tpCar>%s</tpCar>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.tpCar), input_name='tpCar')), eol_))
+            tpCar_ = self.tpCar
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}tpCar').text = self.gds_format_string(tpCar_)
         if self.UF is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<UF>%s</UF>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.UF), input_name='UF')), eol_))
+            UF_ = self.UF
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}UF').text = self.gds_format_string(UF_)
+        if mapping_ is not None:
+            mapping_[self] = element
+        return element
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -1894,55 +1757,35 @@ class propType(GeneratedsSuper):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='propType', namespacedef_='', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('propType')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
+    def to_etree(self, parent_element=None, name_='propType', prefix_=None, mapping_=None):
+        if parent_element is None:
+            element = etree_.Element('{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='propType')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='propType', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='propType'):
-        pass
-    def exportChildren(self, outfile, level, namespace_='', name_='propType', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
+            element = etree_.SubElement(parent_element, '{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         if self.CPF is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<CPF>%s</CPF>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.CPF), input_name='CPF')), eol_))
+            CPF_ = self.CPF
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}CPF').text = self.gds_format_string(CPF_)
         if self.CNPJ is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<CNPJ>%s</CNPJ>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.CNPJ), input_name='CNPJ')), eol_))
+            CNPJ_ = self.CNPJ
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}CNPJ').text = self.gds_format_string(CNPJ_)
         if self.RNTRC is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<RNTRC>%s</RNTRC>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.RNTRC), input_name='RNTRC')), eol_))
+            RNTRC_ = self.RNTRC
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}RNTRC').text = self.gds_format_string(RNTRC_)
         if self.xNome is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<xNome>%s</xNome>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.xNome), input_name='xNome')), eol_))
+            xNome_ = self.xNome
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}xNome').text = self.gds_format_string(xNome_)
         if self.IE is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<IE>%s</IE>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.IE), input_name='IE')), eol_))
+            IE_ = self.IE
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}IE').text = self.gds_format_string(IE_)
         if self.UF is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<UF>%s</UF>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.UF), input_name='UF')), eol_))
+            UF_ = self.UF
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}UF').text = self.gds_format_string(UF_)
         if self.tpProp is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<tpProp>%s</tpProp>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.tpProp), input_name='tpProp')), eol_))
+            tpProp_ = self.tpProp
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}tpProp').text = self.gds_format_string(tpProp_)
+        if mapping_ is not None:
+            mapping_[self] = element
+        return element
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -2049,40 +1892,20 @@ class condutorType(GeneratedsSuper):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='condutorType', namespacedef_='', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('condutorType')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
+    def to_etree(self, parent_element=None, name_='condutorType', prefix_=None, mapping_=None):
+        if parent_element is None:
+            element = etree_.Element('{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='condutorType')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='condutorType', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='condutorType'):
-        pass
-    def exportChildren(self, outfile, level, namespace_='', name_='condutorType', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
+            element = etree_.SubElement(parent_element, '{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         if self.xNome is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<xNome>%s</xNome>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.xNome), input_name='xNome')), eol_))
+            xNome_ = self.xNome
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}xNome').text = self.gds_format_string(xNome_)
         if self.CPF is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<CPF>%s</CPF>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.CPF), input_name='CPF')), eol_))
+            CPF_ = self.CPF
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}CPF').text = self.gds_format_string(CPF_)
+        if mapping_ is not None:
+            mapping_[self] = element
+        return element
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -2249,60 +2072,41 @@ class veicReboqueType(GeneratedsSuper):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='veicReboqueType', namespacedef_='', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('veicReboqueType')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
+    def to_etree(self, parent_element=None, name_='veicReboqueType', prefix_=None, mapping_=None):
+        if parent_element is None:
+            element = etree_.Element('{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='veicReboqueType')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='veicReboqueType', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='veicReboqueType'):
-        pass
-    def exportChildren(self, outfile, level, namespace_='', name_='veicReboqueType', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
+            element = etree_.SubElement(parent_element, '{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         if self.cInt is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<cInt>%s</cInt>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.cInt), input_name='cInt')), eol_))
+            cInt_ = self.cInt
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}cInt').text = self.gds_format_string(cInt_)
         if self.placa is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<placa>%s</placa>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.placa), input_name='placa')), eol_))
+            placa_ = self.placa
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}placa').text = self.gds_format_string(placa_)
         if self.RENAVAM is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<RENAVAM>%s</RENAVAM>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.RENAVAM), input_name='RENAVAM')), eol_))
+            RENAVAM_ = self.RENAVAM
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}RENAVAM').text = self.gds_format_string(RENAVAM_)
         if self.tara is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<tara>%s</tara>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.tara), input_name='tara')), eol_))
+            tara_ = self.tara
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}tara').text = self.gds_format_string(tara_)
         if self.capKG is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<capKG>%s</capKG>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.capKG), input_name='capKG')), eol_))
+            capKG_ = self.capKG
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}capKG').text = self.gds_format_string(capKG_)
         if self.capM3 is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<capM3>%s</capM3>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.capM3), input_name='capM3')), eol_))
+            capM3_ = self.capM3
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}capM3').text = self.gds_format_string(capM3_)
         if self.prop is not None:
-            self.prop.export(outfile, level, namespace_, name_='prop', pretty_print=pretty_print)
+            prop_ = self.prop
+            prop_.to_etree(element, name_='prop', mapping_=mapping_)
         if self.tpCar is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<tpCar>%s</tpCar>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.tpCar), input_name='tpCar')), eol_))
+            tpCar_ = self.tpCar
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}tpCar').text = self.gds_format_string(tpCar_)
         if self.UF is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<UF>%s</UF>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.UF), input_name='UF')), eol_))
+            UF_ = self.UF
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}UF').text = self.gds_format_string(UF_)
+        if mapping_ is not None:
+            mapping_[self] = element
+        return element
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -2489,55 +2293,35 @@ class propType8(GeneratedsSuper):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='propType8', namespacedef_='', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('propType8')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
+    def to_etree(self, parent_element=None, name_='propType8', prefix_=None, mapping_=None):
+        if parent_element is None:
+            element = etree_.Element('{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='propType8')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='propType8', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='propType8'):
-        pass
-    def exportChildren(self, outfile, level, namespace_='', name_='propType8', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
+            element = etree_.SubElement(parent_element, '{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         if self.CPF is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<CPF>%s</CPF>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.CPF), input_name='CPF')), eol_))
+            CPF_ = self.CPF
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}CPF').text = self.gds_format_string(CPF_)
         if self.CNPJ is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<CNPJ>%s</CNPJ>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.CNPJ), input_name='CNPJ')), eol_))
+            CNPJ_ = self.CNPJ
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}CNPJ').text = self.gds_format_string(CNPJ_)
         if self.RNTRC is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<RNTRC>%s</RNTRC>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.RNTRC), input_name='RNTRC')), eol_))
+            RNTRC_ = self.RNTRC
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}RNTRC').text = self.gds_format_string(RNTRC_)
         if self.xNome is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<xNome>%s</xNome>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.xNome), input_name='xNome')), eol_))
+            xNome_ = self.xNome
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}xNome').text = self.gds_format_string(xNome_)
         if self.IE is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<IE>%s</IE>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.IE), input_name='IE')), eol_))
+            IE_ = self.IE
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}IE').text = self.gds_format_string(IE_)
         if self.UF is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<UF>%s</UF>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.UF), input_name='UF')), eol_))
+            UF_ = self.UF
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}UF').text = self.gds_format_string(UF_)
         if self.tpProp is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<tpProp>%s</tpProp>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.tpProp), input_name='tpProp')), eol_))
+            tpProp_ = self.tpProp
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}tpProp').text = self.gds_format_string(tpProp_)
+        if mapping_ is not None:
+            mapping_[self] = element
+        return element
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
@@ -2632,37 +2416,17 @@ class lacRodoType(GeneratedsSuper):
             return True
         else:
             return False
-    def export(self, outfile, level, namespace_='', name_='lacRodoType', namespacedef_='', pretty_print=True):
-        imported_ns_def_ = GenerateDSNamespaceDefs_.get('lacRodoType')
-        if imported_ns_def_ is not None:
-            namespacedef_ = imported_ns_def_
-        if pretty_print:
-            eol_ = '\n'
+    def to_etree(self, parent_element=None, name_='lacRodoType', prefix_=None, mapping_=None):
+        if parent_element is None:
+            element = etree_.Element('{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         else:
-            eol_ = ''
-        if self.original_tagname_ is not None:
-            name_ = self.original_tagname_
-        showIndent(outfile, level, pretty_print)
-        outfile.write('<%s%s%s' % (namespace_, name_, namespacedef_ and ' ' + namespacedef_ or '', ))
-        already_processed = set()
-        self.exportAttributes(outfile, level, already_processed, namespace_, name_='lacRodoType')
-        if self.hasContent_():
-            outfile.write('>%s' % (eol_, ))
-            self.exportChildren(outfile, level + 1, namespace_='', name_='lacRodoType', pretty_print=pretty_print)
-            showIndent(outfile, level, pretty_print)
-            outfile.write('</%s%s>%s' % (namespace_, name_, eol_))
-        else:
-            outfile.write('/>%s' % (eol_, ))
-    def exportAttributes(self, outfile, level, already_processed, namespace_='', name_='lacRodoType'):
-        pass
-    def exportChildren(self, outfile, level, namespace_='', name_='lacRodoType', fromsubclass_=False, pretty_print=True):
-        if pretty_print:
-            eol_ = '\n'
-        else:
-            eol_ = ''
+            element = etree_.SubElement(parent_element, '{http://www.portalfiscal.inf.br/mdfe}' + name_, nsmap={prefix_: 'http://www.portalfiscal.inf.br/mdfe'})
         if self.nLacre is not None:
-            showIndent(outfile, level, pretty_print)
-            outfile.write('<nLacre>%s</nLacre>%s' % (self.gds_encode(self.gds_format_string(quote_xml(self.nLacre), input_name='nLacre')), eol_))
+            nLacre_ = self.nLacre
+            etree_.SubElement(element, '{http://www.portalfiscal.inf.br/mdfe}nLacre').text = self.gds_format_string(nLacre_)
+        if mapping_ is not None:
+            mapping_[self] = element
+        return element
     def build(self, node):
         already_processed = set()
         self.buildAttributes(node, node.attrib, already_processed)
