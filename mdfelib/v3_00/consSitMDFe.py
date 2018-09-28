@@ -387,7 +387,7 @@ except ImportError as exp:
             return class_obj1
         def gds_build_any(self, node, type_name=None):
             if type_name == 'protMDFeType':
-                return infProtType()
+                return infProtType().build(node)
             return None
         @classmethod
         def gds_reverse_node_mapping(cls, mapping):
